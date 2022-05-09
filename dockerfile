@@ -12,4 +12,4 @@ RUN apk add --no-cache nodejs
 WORKDIR /srv
 COPY --from=build /srv/node_modules /srv/node_modules
 COPY --from=build /srv/dist /srv/
-CMD ["node", "index.js"]
+CMD ["node", "Bot.js"]
