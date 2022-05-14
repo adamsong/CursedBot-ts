@@ -1,7 +1,6 @@
 import {Commands} from "../../src/commands";
 import {Hello} from "../../src/commands/Hello";
 import {BaseCommandInteraction, Client, ClientOptions} from "discord.js";
-import {RawInteractionData} from "discord.js/typings/rawDataTypes";
 
 jest.mock("discord.js", () => {
     return {
@@ -17,9 +16,12 @@ describe("Test hello command", () => {
 
     test("should say hello", async () => {
         const interactionMock = {
-            followUp: jest.fn()
+            reply: jest.fn(object => {
+                expect(object.ephemeral).toBeTruthy();
+                expect(object.content).toBeDefined();
+            }),
         } as unknown as BaseCommandInteraction;
         await Hello.run(undefined as unknown as Client, interactionMock);
-        expect(interactionMock.followUp).toHaveBeenCalledWith({ephemeral: true, content: "Hello fuckers!"});
+        expect(interactionMock.reply).toHaveBeenCalled();
     });
 });
