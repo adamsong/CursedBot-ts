@@ -133,3 +133,4 @@ dist
 *.test.js
 
 .DS_Store
+*.sqlite
