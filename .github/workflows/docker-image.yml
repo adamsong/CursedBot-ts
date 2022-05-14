@@ -17,5 +17,5 @@ jobs:
           tags: ghcr.io/adamsogm/cursedbot-ts:latest
           
       - name: Write digest
-        uses: |
+        run: |
           echo "${{ steps.docker_build.outputs.digest }}"
