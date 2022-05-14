@@ -16,7 +16,7 @@ jobs:
           push: true
           tags: ghcr.io/adamsong/cursedbot-ts:latest
           secrets: |
-            "github_token=${{ secrets.GITHUB_TOKEN }}"
+            GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
           
       - name: Write digest
         run: |
