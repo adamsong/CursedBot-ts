@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ghcr.io/adamsogm/cursedbot-ts:latest
+          
+      - name: Write digest
+        uses: |
+          echo "${{ steps.docker_build.outputs.digest }}"
