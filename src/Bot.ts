@@ -4,7 +4,7 @@ import ready from "./listeners/ready";
 import interactionCreate from "./listeners/interactionCreate";
 import config from "./config";
 import express from 'express';
-import {knexInstance} from "./db/knex";
+import {AppDataSource} from "./data-source";
 
 console.log("Bot is starting...");
 
@@ -20,10 +20,10 @@ client.login(config.TOKEN).then(() => {
     readyCount++;
     console.log("Discord client ready")
 });
-knexInstance.migrate.latest({
-    directory: config.MIGRATIONS_PATH
-}).then(() => {
-    console.log("Database ready")
+
+AppDataSource.initialize().then(() => {
+    readyCount++;
+    console.log("Data source ready")
 });
 
 const app = express();

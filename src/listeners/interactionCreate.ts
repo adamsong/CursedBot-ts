@@ -26,6 +26,7 @@ const handleSlashCommand = async (client: Client, interaction: BaseCommandIntera
         });
         return;
     }
+
     command.run(client, interaction);
 }
 

@@ -1,4 +1,5 @@
-import {knexInstance} from "./db/knex";
+import {SchedulePoll} from "./entity/SchedulePoll";
+import {AppDataSource} from "./data-source";
 
 export interface Schedule {
     messageId: string;
@@ -6,20 +7,24 @@ export interface Schedule {
 }
 
 class ScheduleController {
+    scheduleRepo = AppDataSource.getRepository(SchedulePoll);
     schedules: { [messageId: string]: Schedule } = {};
 
     public addSchedule(messageId: string, eventName: string): void {
-        const schedule: Schedule = {
-            messageId: messageId,
-            eventName: eventName
-        };
+        const schedule = new SchedulePoll();
+        schedule.messageId = messageId;
+        schedule.eventName = eventName;
+        this.scheduleRepo.save(schedule).then();
         // this.schedules[messageId] = schedule;
-        knexInstance<Schedule>('schedules').insert(schedule).then();
     }
 
-    public async getSchedule(messageId: string): Promise<Schedule> {
+    public async getSchedule(messageId: string): Promise<Schedule | null> {
         if(!this.schedules[messageId]) {
-            this.schedules[messageId] = await knexInstance<Schedule>('schedules').from('schedules').where({messageId: messageId}).first();
+            const schedule = await this.scheduleRepo.findOneBy({messageId});
+            if(!schedule) {
+                return null;
+            }
+            this.schedules[messageId] = schedule;
         }
         return this.schedules[messageId];
     }
