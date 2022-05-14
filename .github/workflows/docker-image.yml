@@ -14,7 +14,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ghcr.io/adamsogm/cursedbot-ts:latest
+          tags: ghcr.io/adamsong/cursedbot-ts:latest
           
       - name: Write digest
         run: |
