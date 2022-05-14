@@ -20,6 +20,6 @@ describe("Test hello command", () => {
             followUp: jest.fn()
         } as unknown as BaseCommandInteraction;
         await Hello.run(undefined as unknown as Client, interactionMock);
-        expect(interactionMock.followUp).toHaveBeenCalledWith({ephemeral: true, content: "Hello"});
+        expect(interactionMock.followUp).toHaveBeenCalledWith({ephemeral: true, content: "Hello fuckers!"});
     });
 });

@@ -131,3 +131,5 @@ dist
 
 # Test artifacts
 *.test.js
+
+.DS_Store
