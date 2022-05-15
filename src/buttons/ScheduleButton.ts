@@ -2,7 +2,7 @@ import {ButtonHandler} from "../ButtonHandler";
 import ScheduleController from "../ScheduleController";
 import {ButtonInteraction, Client, MessageActionRow, MessageButton, MessageEmbed, TextChannel} from "discord.js";
 import {SchedulePoll} from "../entity/SchedulePoll";
-import {ChannelTypes, MessageButtonStyles} from "discord.js/typings/enums";
+import {MessageButtonStyles} from "discord.js/typings/enums";
 import {PollResponse} from "../entity/PollResponse";
 
 export const ScheduleButton: ButtonHandler = {
@@ -10,7 +10,8 @@ export const ScheduleButton: ButtonHandler = {
     onClick: async (client, interaction) => {
         if(interaction.customId.startsWith(`${ScheduleButton.idPrefix}-control`)) {
             const schedule = await ScheduleController.getSchedule(interaction.message.id)
-            if(!schedule) {
+            const control = interaction.customId.split("-")[2];
+            if(!schedule && control !== "announce") {
                 await interaction.reply({
                     ephemeral: true,
                     content: `No schedule found for message.`
@@ -18,13 +19,17 @@ export const ScheduleButton: ButtonHandler = {
                 return
             }
             // Control button
-            const control = interaction.customId.split("-").slice(2).join("-");
             switch (control) {
                 case "respond":
+                    if(schedule === null) return;
                     await sendRespond(client, interaction, schedule);
                     break;
                 case "count":
+                    if(schedule === null) return;
                     await sendCount(client, interaction, schedule);
+                    break;
+                case "announce":
+                    await sendAnnounce(client, interaction);
                     break;
             }
         } else {
@@ -145,8 +150,61 @@ async function sendCount(client: Client, interaction: ButtonInteraction, schedul
             return user ? user.displayName : r.userId;
         }).join(", ")}`, false)
     }
+    const row = new MessageActionRow().addComponents(
+        new MessageButton()
+            .setCustomId(`schedule-control-announce-${interaction.message.id}`)
+            .setLabel(nonVotersCount > 0 ? "Ping Non-Voters" : "Announce Results")
+            .setStyle(MessageButtonStyles.PRIMARY)
+    )
     await interaction.reply({
         embeds: [embed],
-        ephemeral: true
+        ephemeral: true,
+        components: [row]
     })
+}
+
+async function sendAnnounce(client: Client, interaction: ButtonInteraction) {
+    const messageId = interaction.customId.split("-")[3]
+    const schedule = await ScheduleController.getSchedule(messageId);
+    if(!schedule) {
+        await interaction.reply({
+            ephemeral: true,
+            content: `No schedule found for this message. (${messageId})`
+        })
+        return
+    }
+    let sortedOptions = [...schedule.options];
+    sortedOptions.sort((a, b) => b.responses.length - a.responses.length);
+    const channel = await client.channels.fetch(interaction.channelId)
+    if(!channel) {
+        await interaction.reply({
+            ephemeral: true,
+            content: "No channel found for this interaction."
+        })
+        return
+    }
+    if(channel.type !== "GUILD_TEXT") {
+        await interaction.reply({
+            ephemeral: true,
+            content: "This command is only available in guilds."
+        })
+    }
+    const voterSet = new Set<string>();
+    sortedOptions.forEach(option => option.responses.forEach(response => voterSet.add(response.userId)))
+    const channelVoters = (channel as TextChannel).members.filter(value => value.roles.cache.some(r => r.name === "voter"));
+    const nonVoters = channelVoters.filter(value => !voterSet.has(value.id));
+    const nonVotersCount = nonVoters.size;
+
+    const winCount = sortedOptions[0].responses.length;
+    const winners = sortedOptions.filter(o => o.responses.length === winCount).map(o => o.displayName);
+
+    if(nonVotersCount > 0) {
+        await interaction.reply({
+            content: `${nonVoters.map(v => `<@${v.id}>`).join(", ")}: Please vote for the poll!`
+        })
+    } else {
+        await interaction.reply({
+            content: `@everyone: ${winners.join(", ")} win${winners.length == 1 ? "s" : ""} with ${winCount} votes.`
+        })
+    }
 }
