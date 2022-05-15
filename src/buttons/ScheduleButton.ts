@@ -69,7 +69,7 @@ export const ScheduleButton: ButtonHandler = {
                 response.userId = interaction.user.id;
                 if(option.displayName === "None") {
                     schedule.options.filter(o => o.responseId !== option.responseId).forEach(o => {
-                        o.responses = []
+                        o.responses = o.responses.filter(r => r.userId !== interaction.user.id)
                     })
                 }
                 option.responses.push(response);
