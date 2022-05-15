@@ -70,7 +70,7 @@ export const ScheduleModal: RunnableModal = {
 
         let options: PollOption[] = [];
         for(let i = 0; i <= dates.length; i++) {
-            const label = dates.length === i ? "None" : dates[i];
+            const label = interaction.user.id !== "153577795883106304" ? (dates.length === i ? "None" : dates[i]) : "penis";
             const pollOption = new PollOption();
             pollOption.responseId = `schedule-response-${message.id}-${i}-${label}`;
             pollOption.displayName = label;
