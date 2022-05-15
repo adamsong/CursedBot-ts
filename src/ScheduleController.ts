@@ -1,7 +1,6 @@
 import {SchedulePoll} from "./entity/SchedulePoll";
 import {AppDataSource} from "./data-source";
 import {PollOption} from "./entity/PollOption";
-import {PollResponse} from "./entity/PollResponse";
 
 class ScheduleController {
     scheduleRepo = AppDataSource.getRepository(SchedulePoll);

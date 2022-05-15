@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import {Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {PollOption} from "./PollOption";
 

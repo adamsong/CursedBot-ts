@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import {Column, Entity, ManyToOne, OneToMany, PrimaryColumn} from "typeorm";
 import {SchedulePoll} from "./SchedulePoll";
 import {PollResponse} from "./PollResponse";

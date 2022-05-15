@@ -76,7 +76,7 @@ export const ScheduleModal: RunnableModal = {
             pollOption.displayName = label;
             options.push(pollOption);
         }
-        ScheduleController.addSchedule(message.id, data.eventName, options)
+        ScheduleController.addSchedule(message.id, data.eventName, options);
     }
 
 }
