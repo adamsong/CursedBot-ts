@@ -58,8 +58,8 @@ export const ScheduleModal: RunnableModal = {
                 .setStyle(MessageButtonStyles.PRIMARY)
                 .setLabel("Respond to Poll"),
             new MessageButton()
-                .setCustomId("schedule-control-get-schedule")
-                .setLabel("Get Schedule")
+                .setCustomId("schedule-control-count")
+                .setLabel("Count Results")
                 .setStyle(MessageButtonStyles.PRIMARY)
         ));
         const message = await interaction.reply({
