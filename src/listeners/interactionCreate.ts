@@ -5,13 +5,11 @@ import {Buttons} from "../buttons";
 
 export default (client: Client): void =>{
     client.on('interactionCreate', async (interaction: Interaction) => {
-        if(interaction.isCommand() || interaction.isContextMenu()) {
+        if(interaction.isCommand()) {
             await handleSlashCommand(client, interaction);
-        }
-        if(interaction.isModalSubmit()) {
+        } else if(interaction.isModalSubmit()) {
             await handleModalSubmit(client, interaction)
-        }
-        if(interaction.isButton()) {
+        } else if(interaction.isButton()) {
             await handleButton(client, interaction);
         }
     });

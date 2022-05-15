@@ -23,15 +23,15 @@ interface Config {
     DB_DATABASE: string;
 }
 
-const getConfig = (): ENV => {
+const getConfig = (source: {[key: string]: string | undefined} = process.env): ENV => {
     return {
-        TOKEN: process.env.TOKEN,
-        PORT: process.env.PORT && Number(process.env.PORT) || 8080,
-        DB_HOST: process.env.DB_HOST,
-        DB_PORT: process.env.DB_PORT && Number(process.env.DB_PORT) || undefined,
-        DB_USER: process.env.DB_USER,
-        DB_PASSWORD: process.env.DB_PASSWORD,
-        DB_DATABASE: process.env.DB_DATABASE,
+        TOKEN: source.TOKEN,
+        PORT: source.PORT && Number(source.PORT) || 8080,
+        DB_HOST: source.DB_HOST,
+        DB_PORT: source.DB_PORT && Number(source.DB_PORT) || undefined,
+        DB_USER: source.DB_USER,
+        DB_PASSWORD: source.DB_PASSWORD,
+        DB_DATABASE: source.DB_DATABASE,
     }
 }
 
@@ -47,6 +47,6 @@ const sanitizeConfig = (config: ENV): Config => {
 const sanitizedConfig = sanitizeConfig(getConfig());
 export default sanitizedConfig;
 
-export function loadConfig(): Config {
-    return sanitizeConfig(getConfig());
+export function loadConfig(source: {[key: string]: string | undefined} = process.env): Config {
+    return sanitizeConfig(getConfig(source));
 }

@@ -1,31 +1,68 @@
+import {loadConfig} from "../src/config";
 
 describe('Testing config', () => {
+    let testConfig: {[name: string]: string} = {}
     beforeEach(() => {
-        process.env.ENV_FILE = 'no_env';
-        process.env.TOKEN = 'token';
-        delete process.env.PORT;
+        testConfig = {
+            TOKEN: "token",
+            DB_HOST: "host",
+            DB_USER: "user",
+            DB_PORT: "1234",
+            DB_PASSWORD: "pass",
+            DB_DATABASE: "db",
+        }
     });
 
-    test("empty config should throw error", () => {
-        delete process.env.TOKEN;
-        expect(() => {require('../src/config')}).toThrow();
+    test("default test config should not error", () => {
+        expect(() => {
+            loadConfig(testConfig)
+        }).not.toThrow();
     });
 
-    test("populated config should not throw error", () => {
-        let config = require('../src/config').default;
-        expect(config.TOKEN).toBeDefined();
-        expect(config.PORT).toBeDefined();
+    test("full config should return correct values", () => {
+        testConfig.PORT = "4321";
+        const config = loadConfig(testConfig);
+        expect(config.TOKEN).toBe(testConfig.TOKEN);
+        expect(config.DB_HOST).toBe(testConfig.DB_HOST);
+        expect(config.DB_USER).toBe(testConfig.DB_USER);
+        expect(config.DB_PASSWORD).toBe(testConfig.DB_PASSWORD);
+        expect(config.DB_DATABASE).toBe(testConfig.DB_DATABASE);
+        expect(config.DB_PORT).toBe(Number(testConfig.DB_PORT));
+        expect(config.PORT).toBe(4321);
     });
 
-    test("token should be settable from env", () => {
-        process.env.TOKEN = 'test_token';
-        let config = require('../src/config').loadConfig();
-        expect(config.TOKEN).toBe('test_token');
+    test("missing token should throw error", () => {
+        delete testConfig.TOKEN;
+        expect(() => loadConfig(testConfig)).toThrowError();
     });
 
-    test("port should be settable from env", () => {
-        process.env.PORT = '1234';
-        let config = require('../src/config').loadConfig();
-        expect(config.PORT).toBe(1234);
+    test("missing db host should throw error", () => {
+        delete testConfig.DB_HOST;
+        expect(() => loadConfig(testConfig)).toThrowError();
+    });
+
+    test("missing db port should throw error", () => {
+        delete testConfig.DB_PORT;
+        expect(() => loadConfig(testConfig)).toThrowError();
+    });
+
+    test("missing db user should throw error", () => {
+        delete testConfig.DB_USER;
+        expect(() => loadConfig(testConfig)).toThrowError();
+    });
+
+    test("missing db password should throw error", () => {
+        delete testConfig.DB_PASSWORD;
+        expect(() => loadConfig(testConfig)).toThrowError();
+    });
+
+    test("missing db database should throw error", () => {
+        delete testConfig.DB_DATABASE;
+        expect(() => loadConfig(testConfig)).toThrowError();
+    });
+
+    test("non-numeric db port should throw error", () => {
+        testConfig.DB_PORT = "abc";
+        expect(() => console.log(loadConfig(testConfig))).toThrowError();
     });
 });
