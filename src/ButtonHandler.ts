@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import {ButtonInteraction, Client} from "discord.js";
 
 export interface ButtonHandler {
