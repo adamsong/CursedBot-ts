@@ -2,13 +2,6 @@ import {Commands} from "../../src/commands";
 import {Hello} from "../../src/commands/Hello";
 import {BaseCommandInteraction, Client, ClientOptions} from "discord.js";
 
-jest.mock("discord.js", () => {
-    return {
-        Client: jest.fn().mockImplementation(() => { return {}}),
-        BaseCommandInteraction: jest.fn().mockImplementation(() => { return {}}),
-    }
-});
-
 describe("Test hello command", () => {
     test("should be in index.ts", () => {
         expect(Commands.find(s => s === Hello)).toBeTruthy();

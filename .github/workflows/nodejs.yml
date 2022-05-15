@@ -24,3 +24,10 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+        env:
+          TOKEN: token
+          DB_HOST: host
+          DB_USER: user
+          DB_PORT: 1234
+          DB_PASSWORD: pass
+          DB_DATABASE: db

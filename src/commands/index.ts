@@ -1,8 +1,8 @@
 import {Command} from "../Command";
 import {Hello} from "./Hello";
-import {Schedule} from "./Schedule";
+import {ScheduleCommand} from "./ScheduleCommand";
 
 export const Commands: Command[] = [
     Hello,
-    Schedule
+    ScheduleCommand
 ];
