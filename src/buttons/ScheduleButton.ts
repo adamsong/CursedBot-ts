@@ -1,9 +1,18 @@
 import {ButtonHandler} from "../ButtonHandler";
 import ScheduleController from "../ScheduleController";
-import {ButtonInteraction, Client, MessageActionRow, MessageButton, MessageEmbed, TextChannel} from "discord.js";
+import {
+    ButtonInteraction,
+    Client, Collection,
+    GuildMember,
+    MessageActionRow,
+    MessageButton,
+    MessageEmbed, Snowflake,
+    TextChannel
+} from "discord.js";
 import {SchedulePoll} from "../entity/SchedulePoll";
 import {MessageButtonStyles} from "discord.js/typings/enums";
 import {PollResponse} from "../entity/PollResponse";
+import {PollOption} from "../entity/PollOption";
 
 export const ScheduleButton: ButtonHandler = {
     idPrefix: "schedule",
@@ -106,54 +115,32 @@ const sendRespond = async (client: Client, interaction: ButtonInteraction, sched
 
     await interaction.reply({
         ephemeral: true,
-        content: "Respond to the following options:",
+        content: "Please indicate your availability.",
         components: renderButtons(schedule, interaction.user.id)
     })
 }
 
 async function sendCount(client: Client, interaction: ButtonInteraction, schedule: SchedulePoll) {
-    let sortedOptions = [...schedule.options];
-    sortedOptions.sort((a, b) => b.responses.length - a.responses.length);
-    const channel = await client.channels.fetch(interaction.channelId)
-    if(!channel) {
-        await interaction.reply({
-            ephemeral: true,
-            content: "No channel found for this interaction."
-        })
-        return
-    }
-    if(channel.type !== "GUILD_TEXT") {
-        await interaction.reply({
-            ephemeral: true,
-            content: "This command is only available in guilds."
-        })
-    }
-    const voterSet = new Set<string>();
-    sortedOptions.forEach(option => option.responses.forEach(response => voterSet.add(response.userId)))
-    const channelVoters = (channel as TextChannel).members.filter(value => value.roles.cache.some(r => r.name === "voter"));
-    const nonVoters = channelVoters.filter(value => !voterSet.has(value.id));
-    const nonVotersCount = nonVoters.size;
-
-    const winCount = sortedOptions[0].responses.length;
-    const winners = sortedOptions.filter(o => o.responses.length === winCount).map(o => o.displayName);
+    const voteCount = await countVotes(schedule.options, client, interaction);
+    if(!voteCount) return;
     const embed = new MessageEmbed()
         .setTitle("Current Poll Results")
         .setColor(0x000000)
-    if(nonVotersCount > 0) {
-        embed.setDescription(`${winners.join(", ")} leading with ${winCount} votes, waiting on ${nonVotersCount} non-voters. \n\n(${nonVoters.map(v => v.displayName).join(", ")})`)
+    if(voteCount.nonVoters.size > 0) {
+        embed.setDescription(`${voteCount.winners.join(", ")} leading with ${voteCount.winCount} votes, waiting on ${voteCount.nonVoters.size} non-voters. \n\n(${voteCount.nonVoters.map(v => v.displayName).join(", ")})`)
     } else {
-        embed.setDescription(`${winners.join(", ")} win${winners.length == 1 ? "s" : ""} with ${winCount} votes.`)
+        embed.setDescription(`${voteCount.winners.join(", ")} win${voteCount.winners.length == 1 ? "s" : ""} with ${voteCount.winCount} votes.`)
     }
-    for(const option of sortedOptions) {
+    for(const option of voteCount.sortedOptions) {
         embed.addField(option.displayName, `${option.responses.length} - ${option.responses.map(r => {
-            const user = channelVoters.find(u => u.id === r.userId);
+            const user = voteCount.channelVoters.find(u => u.id === r.userId);
             return user ? user.displayName : r.userId;
         }).join(", ")}`, false)
     }
     const row = new MessageActionRow().addComponents(
         new MessageButton()
             .setCustomId(`schedule-control-announce-${interaction.message.id}`)
-            .setLabel(nonVotersCount > 0 ? "Ping Non-Voters" : "Announce Results")
+            .setLabel(voteCount.nonVoters.size > 0 ? "Ping Non-Voters" : "Announce Results")
             .setStyle(MessageButtonStyles.PRIMARY)
     )
     await interaction.reply({
@@ -173,7 +160,26 @@ async function sendAnnounce(client: Client, interaction: ButtonInteraction) {
         })
         return
     }
-    let sortedOptions = [...schedule.options];
+
+    const voteCount = await countVotes(schedule.options, client, interaction);
+    if(!voteCount) return;
+
+    if(voteCount.nonVoters.size > 0) {
+        await interaction.reply({
+            content: `${voteCount.nonVoters.map(v => `<@${v.id}>`).join(", ")}: Please vote for the poll!`
+        })
+    } else {
+        await interaction.reply({
+            content: `${interaction.guild?.roles.cache.find(v => v.name === "voter")}: ${voteCount.winners.join(", ")} win${voteCount.winners.length == 1 ? "s" : ""} with ${voteCount.winCount} votes.`,
+            allowedMentions: {
+                parse: ["roles"]
+            }
+        })
+    }
+}
+
+const countVotes = async (options: PollOption[], client: Client, interaction: ButtonInteraction): Promise<VoteCount | undefined> => {
+    let sortedOptions = [...options];
     sortedOptions.sort((a, b) => b.responses.length - a.responses.length);
     const channel = await client.channels.fetch(interaction.channelId)
     if(!channel) {
@@ -188,23 +194,29 @@ async function sendAnnounce(client: Client, interaction: ButtonInteraction) {
             ephemeral: true,
             content: "This command is only available in guilds."
         })
+        return
     }
     const voterSet = new Set<string>();
     sortedOptions.forEach(option => option.responses.forEach(response => voterSet.add(response.userId)))
     const channelVoters = (channel as TextChannel).members.filter(value => value.roles.cache.some(r => r.name === "voter"));
     const nonVoters = channelVoters.filter(value => !voterSet.has(value.id));
-    const nonVotersCount = nonVoters.size;
 
     const winCount = sortedOptions[0].responses.length;
     const winners = sortedOptions.filter(o => o.responses.length === winCount).map(o => o.displayName);
 
-    if(nonVotersCount > 0) {
-        await interaction.reply({
-            content: `${nonVoters.map(v => `<@${v.id}>`).join(", ")}: Please vote for the poll!`
-        })
-    } else {
-        await interaction.reply({
-            content: `@everyone: ${winners.join(", ")} win${winners.length == 1 ? "s" : ""} with ${winCount} votes.`
-        })
+    return {
+        winCount: winCount,
+        winners: winners,
+        nonVoters: nonVoters,
+        sortedOptions: sortedOptions,
+        channelVoters: channelVoters
     }
+}
+
+interface VoteCount {
+    winCount: number,
+    winners: string[],
+    nonVoters: Collection<Snowflake, GuildMember>
+    sortedOptions: PollOption[],
+    channelVoters: Collection<Snowflake, GuildMember>
 }

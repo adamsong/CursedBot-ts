@@ -1,5 +1,5 @@
 import {RunnableModal} from "../Modal";
-import {MessageActionRow, MessageButton, TextInputComponentOptions} from "discord.js";
+import {MessageActionRow, MessageButton, MessageEmbed, TextInputComponentOptions} from "discord.js";
 import {MessageButtonStyles, MessageComponentTypes, TextInputStyles} from "discord.js/typings/enums";
 import ScheduleController from "../ScheduleController";
 import {PollOption} from "../entity/PollOption";
@@ -62,10 +62,21 @@ export const ScheduleModal: RunnableModal = {
                 .setLabel("Count Results")
                 .setStyle(MessageButtonStyles.PRIMARY)
         ));
+
+        const embed = new MessageEmbed()
+            .setTitle("Schedule Poll for " + data.eventName)
+            .setDescription("Please respond to the following poll with the number of timeslots you are available for the event.\n\n" +
+                "You can respond to the poll at any time by clicking the button below.")
+            .setColor("#0099ff")
+            .addField("Timeslots", dates.join("\n"));
         const message = await interaction.reply({
-            content: "Select a date",
+            content: `${interaction.guild?.roles.cache.find(v => v.name === "voter")}`,
             components: rows,
-            fetchReply: true
+            fetchReply: true,
+            embeds: [embed],
+            allowedMentions: {
+                parse: ["users", "roles"],
+            }
         });
 
         let options: PollOption[] = [];
