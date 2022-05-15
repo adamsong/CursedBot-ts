@@ -2,6 +2,9 @@ import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { SchedulePoll } from "./entity/SchedulePoll"
 import config from "./config";
+import {PollOption} from "./entity/PollOption";
+import "reflect-metadata";
+import {PollResponse} from "./entity/PollResponse";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -12,7 +15,7 @@ export const AppDataSource = new DataSource({
     database: config.DB_DATABASE,
     synchronize: true,
     logging: false,
-    entities: [SchedulePoll],
+    entities: [SchedulePoll, PollOption, PollResponse],
     migrations: [],
     subscribers: [],
 })

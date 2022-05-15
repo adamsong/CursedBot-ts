@@ -1,7 +1,8 @@
 import {RunnableModal} from "../Modal";
 import {MessageActionRow, MessageButton, TextInputComponentOptions} from "discord.js";
 import {MessageButtonStyles, MessageComponentTypes, TextInputStyles} from "discord.js/typings/enums";
-import ScheduleController, {Schedule} from "../ScheduleController";
+import ScheduleController from "../ScheduleController";
+import {PollOption} from "../entity/PollOption";
 
 export const ScheduleModal: RunnableModal = {
     customId: "schedule",
@@ -51,21 +52,13 @@ export const ScheduleModal: RunnableModal = {
             throw new Error("Too many dates");
         }
         let rows = [];
-        for(let i = 0; i <= dates.length; i++) {
-            if(i % 5 == 0) {
-                rows.push(new MessageActionRow());
-            }
-            const label = dates.length === i ? "None" : dates[i];
-            rows[rows.length - 1].addComponents(
-                new MessageButton()
-                    .setCustomId(`schedule-button-${label}-${i}`)
-                    .setLabel(label)
-                    .setStyle(dates.length === i ? MessageButtonStyles.DANGER : MessageButtonStyles.PRIMARY)
-            );
-        }
         rows.push(new MessageActionRow().addComponents(
             new MessageButton()
-                .setCustomId("schedule-button-get-schedule")
+                .setCustomId("schedule-control-respond")
+                .setStyle(MessageButtonStyles.PRIMARY)
+                .setLabel("Respond to Poll"),
+            new MessageButton()
+                .setCustomId("schedule-control-get-schedule")
                 .setLabel("Get Schedule")
                 .setStyle(MessageButtonStyles.PRIMARY)
         ));
@@ -74,7 +67,16 @@ export const ScheduleModal: RunnableModal = {
             components: rows,
             fetchReply: true
         });
-        ScheduleController.addSchedule(message.id, data.eventName)
+
+        let options: PollOption[] = [];
+        for(let i = 0; i <= dates.length; i++) {
+            const label = dates.length === i ? "None" : dates[i];
+            const pollOption = new PollOption();
+            pollOption.responseId = `schedule-response-${message.id}-${i}-${label}`;
+            pollOption.displayName = label;
+            options.push(pollOption);
+        }
+        ScheduleController.addSchedule(message.id, data.eventName, options)
     }
 
 }

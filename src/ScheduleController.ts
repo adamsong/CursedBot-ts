@@ -1,32 +1,29 @@
 import {SchedulePoll} from "./entity/SchedulePoll";
 import {AppDataSource} from "./data-source";
-
-export interface Schedule {
-    messageId: string;
-    eventName: string;
-}
+import {PollOption} from "./entity/PollOption";
+import {PollResponse} from "./entity/PollResponse";
 
 class ScheduleController {
     scheduleRepo = AppDataSource.getRepository(SchedulePoll);
-    schedules: { [messageId: string]: Schedule } = {};
 
-    public addSchedule(messageId: string, eventName: string): void {
+    public addSchedule(messageId: string, eventName: string, options: PollOption[]): void {
         const schedule = new SchedulePoll();
         schedule.messageId = messageId;
         schedule.eventName = eventName;
+        schedule.options = options;
         this.scheduleRepo.save(schedule).then();
-        // this.schedules[messageId] = schedule;
     }
 
-    public async getSchedule(messageId: string): Promise<Schedule | null> {
-        if(!this.schedules[messageId]) {
-            const schedule = await this.scheduleRepo.findOneBy({messageId});
-            if(!schedule) {
-                return null;
+    public async getSchedule(messageId: string): Promise<SchedulePoll | null> {
+        return await this.scheduleRepo.findOne({
+            where: {
+                messageId: messageId
             }
-            this.schedules[messageId] = schedule;
-        }
-        return this.schedules[messageId];
+        });
+    }
+
+    public async save (schedule: SchedulePoll): Promise<SchedulePoll> {
+        return await this.scheduleRepo.save(schedule);
     }
 }
 const scheduleController = new ScheduleController();

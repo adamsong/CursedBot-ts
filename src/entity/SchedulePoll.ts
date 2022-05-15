@@ -1,4 +1,5 @@
-import {Entity, Column, PrimaryColumn} from "typeorm"
+import {Entity, Column, PrimaryColumn, OneToMany} from "typeorm"
+import {PollOption} from "./PollOption";
 
 @Entity()
 export class SchedulePoll {
@@ -8,5 +9,11 @@ export class SchedulePoll {
 
     @Column()
     eventName!: string
+
+    @OneToMany(type => PollOption, option => option.schedulePoll, {
+        eager: true,
+        cascade: true
+    })
+    options!: PollOption[]
 
 }
