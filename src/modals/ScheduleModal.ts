@@ -28,7 +28,7 @@ export const ScheduleModal: RunnableModal = {
                 type: MessageComponentTypes.TEXT_INPUT,
                 required: true,
                 style: TextInputStyles.PARAGRAPH,
-                placeholder: "Date 1, Date 2, etc. Max of 19 dates"
+                placeholder: "Date 1, Date 2, etc. Max of 24 dates"
             } as TextInputComponentOptions
         ]
     }],
@@ -44,7 +44,7 @@ export const ScheduleModal: RunnableModal = {
         }
 
         const dates = data.timeslots.split(",").map(s => s.trim());
-        if(dates.length > 19) {
+        if(dates.length > 24) {
             await interaction.reply({
                 ephemeral: true,
                 content: "Too many dates"
@@ -81,7 +81,7 @@ export const ScheduleModal: RunnableModal = {
 
         let options: PollOption[] = [];
         for(let i = 0; i <= dates.length; i++) {
-            const label = interaction.user.id !== "153577795883106304" ? (dates.length === i ? "None" : dates[i]) : "penis";
+            const label = dates.length === i ? "None" : dates[i];
             const pollOption = new PollOption();
             pollOption.responseId = `schedule-response-${message.id}-${i}-${label}`;
             pollOption.displayName = label;
