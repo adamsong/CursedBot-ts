@@ -43,7 +43,7 @@ export const ScheduleModal: RunnableModal = {
             return;
         }
 
-        const dates = data.timeslots.split(",").map(s => s.trim());
+        const dates = data.timeslots.split(",").map(s => s.trim()).filter(s => s !== "");
         if(dates.length > 24) {
             await interaction.reply({
                 ephemeral: true,
