@@ -1,6 +1,5 @@
 import { Command } from '../Command';
 import { BaseCommandInteraction, Client } from 'discord.js';
-import is from '@sindresorhus/is';
 import { EffectTable } from '../EffectTable';
 
 export const TranslateCommand: Command = {
