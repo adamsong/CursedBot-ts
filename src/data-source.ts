@@ -5,6 +5,8 @@ import config from "./config";
 import {PollOption} from "./entity/PollOption";
 import "reflect-metadata";
 import {PollResponse} from "./entity/PollResponse";
+import { Campaign } from './entity/Campaign';
+import { DrawnCard } from './entity/DrawnCard';
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -14,8 +16,8 @@ export const AppDataSource = new DataSource({
     password: config.DB_PASSWORD,
     database: config.DB_DATABASE,
     synchronize: true,
-    logging: false,
-    entities: [SchedulePoll, PollOption, PollResponse],
+    logging: true,
+    entities: [SchedulePoll, PollOption, PollResponse, Campaign, DrawnCard],
     migrations: [],
     subscribers: [],
 })

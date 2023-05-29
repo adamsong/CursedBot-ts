@@ -1,0 +1,202 @@
+{
+	"bb1": {
+		"type": "bad",
+		"effect": "Turn a missed hit against you into a hit"
+	},
+	"bb2": {
+		"type": "bad",
+		"effect": "Miss on an attack roll"
+	},
+	"bb3": {
+		"type": "bad",
+		"effect": "Reroll a skill or attack roll"
+	},
+	"bb4": {
+		"type": "bad",
+		"effect": "Disadvantage on a skill or attack roll"
+	},
+	"bb5": {
+		"type": "bad",
+		"effect": "-1d4 after making a skill or attack roll"
+	},
+	"bb6": {
+		"type": "bad",
+		"effect": "-1d6 after making a skill or attack roll"
+	},
+	"bb7": {
+		"type": "bad",
+		"effect": "-1d8 after making a skill or attack roll"
+	},
+	"bb8": {
+		"type": "bad",
+		"effect": "-1d10 after making a skill or attack roll"
+	},
+	"bb9": {
+		"type": "bad",
+		"effect": "-1d12 after making a skill or attack roll"
+	},
+	"bb10": {
+		"type": "bad",
+		"effect": "Fail on a skill check"
+	},
+	"bb11": {
+		"type": "bad",
+		"effect": "You act last in the initiative order"
+	},
+	"bb12": {
+		"type": "bad",
+		"effect": "You deal minimum damage this attack"
+	},
+	"bb13": {
+		"type": "bad",
+		"effect": "Fail on a saving throw"
+	},
+	"bb14": {
+		"type": "bad",
+		"effect": "Disadvantage on a saving throw"
+	},
+	"bb15": {
+		"type": "bad",
+		"effect": "-1d4 after making a saving throw"
+	},
+	"bb16": {
+		"type": "bad",
+		"effect": "-1d6 after making a saving throw"
+	},
+	"bb17": {
+		"type": "bad",
+		"effect": "-1d8 after making a saving throw"
+	},
+	"bb18": {
+		"type": "bad",
+		"effect": "-1d10 after making a saving throw"
+	},
+	"bb19": {
+		"type": "bad",
+		"effect": "-1d12 after making a saving throw"
+	},
+	"bb20": {
+		"type": "bad",
+		"effect": "You receive the minimum amount of healing possible from any one source"
+	},
+	"bb21": {
+		"type": "bad",
+		"effect": "You must reroll this attack"
+	},
+	"bb22": {
+		"type": "bad",
+		"effect": "A small item on your person goes missing"
+	},
+	"bb23": {
+		"type": "bad",
+		"effect": "You discover your weapon in disrepair; it deals half damage until you can take time required to tend to it"
+	},
+	"bb24": {
+		"type": "bad",
+		"effect": "The next person you interact with takes an irrational disliking to you"
+	},
+	"bb25": {
+		"type": "bad",
+		"effect": "The next enemy you fight will attack you over other targets whenever possible"
+	},
+	"gb1": {
+		"type": "good",
+		"effect": "Succeed on an attack roll"
+	},
+	"gb2": {
+		"type": "good",
+		"effect": "Reroll a skill or attack roll"
+	},
+	"gb3": {
+		"type": "good",
+		"effect": "Advantage on a skill or attack roll"
+	},
+	"gb4": {
+		"type": "good",
+		"effect": "+1d4 after making a skill or attack roll"
+	},
+	"gb5": {
+		"type": "good",
+		"effect": "+1d6 after making a skill or attack roll"
+	},
+	"gb6": {
+		"type": "good",
+		"effect": "+1d8 after making a skill or attack roll"
+	},
+	"gb7": {
+		"type": "good",
+		"effect": "+1d10 after making a skill or attack roll"
+	},
+	"gb8": {
+		"type": "good",
+		"effect": "+1d12 after making a skill or attack roll"
+	},
+	"gb9": {
+		"type": "good",
+		"effect": "Turn a successful hit against you into a miss, or a critical hit into a normal hit"
+	},
+	"gb10": {
+		"type": "good",
+		"effect": "Succeed on a skill check"
+	},
+	"gb11": {
+		"type": "good",
+		"effect": "Choose your initiative score"
+	},
+	"gb12": {
+		"type": "good",
+		"effect": "You deal maximum damage on this attack"
+	},
+	"gb13": {
+		"type": "good",
+		"effect": "Succeed on a saving throw"
+	},
+	"gb14": {
+		"type": "good",
+		"effect": "Advantage on a saving throw"
+	},
+	"gb15": {
+		"type": "good",
+		"effect": "+1d4 after making a saving throw"
+	},
+	"gb16": {
+		"type": "good",
+		"effect": "+1d6 after making a saving throw"
+	},
+	"gb17": {
+		"type": "good",
+		"effect": "+1d8 after making a saving throw"
+	},
+	"gb18": {
+		"type": "good",
+		"effect": "+1d10 after making a saving throw"
+	},
+	"gb19": {
+		"type": "good",
+		"effect": "+1d12 after making a saving throw"
+	},
+	"gb20": {
+		"type": "good",
+		"effect": "Your movement this turn does not provoke attacks of opportunity"
+	},
+	"gb21": {
+		"type": "good",
+		"effect": "You receive t he maximum amount of healing possible from any one source"
+	},
+	"gb22": {
+		"type": "good",
+		"effect": "Force an attacker to reroll and attack against you"
+	},
+	"gb23": {
+		"type": "good",
+		"effect": "A fortuitous circumstance! This may manifest itself in many ways, including (but not limited to): double the loot reward, finding a door or chest unlocked, coming across a broken trap, bumping into someone you were looking for, or any manner of lucky happenstance that helps you during your adventure"
+	},
+	"gb24": {
+		"type": "good",
+		"effect": "A fortuitous circumstance! This may manifest itself in many ways, including (but not limited to): double the loot reward, finding a door or chest unlocked, coming across a broken trap, bumping into someone you were looking for, or any manner of lucky happenstance that helps you during your adventure"
+	},
+	"gb25": {
+		"type": "good",
+		"effect": "A fortuitous circumstance! This may manifest itself in many ways, including (but not limited to): double the loot reward, finding a door or chest unlocked, coming across a broken trap, bumping into someone you were looking for, or any manner of lucky happenstance that helps you during your adventure"
+	}
+}

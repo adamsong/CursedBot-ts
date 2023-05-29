@@ -5,6 +5,7 @@ import interactionCreate from "./listeners/interactionCreate";
 import config from "./config";
 import express from 'express';
 import {AppDataSource} from "./data-source";
+import campaignController from './CampaignController';
 
 console.log("Bot is starting...");
 
@@ -41,6 +42,7 @@ client.login(config.TOKEN).then(() => {
 AppDataSource.initialize().then(() => {
     readyCount++;
     console.log("Data source ready")
+    campaignController.initCache()
 });
 
 const app = express();
