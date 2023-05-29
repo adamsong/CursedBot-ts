@@ -1,6 +1,5 @@
-import {Commands} from "../../src/commands";
-import {Hello} from "../../src/commands/Hello";
-import {BaseCommandInteraction, Client, ClientOptions} from "discord.js";
+import { Commands } from '../../src/commands';
+import { Client, CommandInteraction } from 'discord.js';
 import { TranslateCommand } from '../../src/commands/TranslateCommand';
 
 describe("Test translate command", () => {
@@ -28,7 +27,7 @@ describe("Test translate command", () => {
                     return {value: id}
                 })
             }
-        } as unknown as BaseCommandInteraction;
+        } as unknown as CommandInteraction;
         await TranslateCommand.run(undefined as unknown as Client, interactionMock);
         expect(interactionMock.reply).toHaveBeenCalled();
     });
