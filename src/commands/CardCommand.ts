@@ -44,7 +44,8 @@ export const CardCommand: Command = {
 
                 await interaction.reply({
                     content: message,
-                    components: hasCards ? [actionRow] : []
+                    components: hasCards ? [actionRow] : [],
+                    ephemeral: true
                 })
         }
     },
