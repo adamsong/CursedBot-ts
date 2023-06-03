@@ -7,6 +7,7 @@ import "reflect-metadata";
 import {PollResponse} from "./entity/PollResponse";
 import { Campaign } from './entity/Campaign';
 import { DrawnCard } from './entity/DrawnCard';
+import { Nickname } from './entity/Nickname';
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -17,7 +18,7 @@ export const AppDataSource = new DataSource({
     database: config.DB_DATABASE,
     synchronize: true,
     logging: true,
-    entities: [SchedulePoll, PollOption, PollResponse, Campaign, DrawnCard],
+    entities: [SchedulePoll, PollOption, PollResponse, Campaign, DrawnCard, Nickname],
     migrations: [],
     subscribers: [],
 })

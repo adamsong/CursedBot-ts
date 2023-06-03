@@ -20,7 +20,7 @@ export class DrawnCard {
     @CreateDateColumn()
     drawnAt!: Date
 
-    @ManyToOne(type => Campaign)
+    @ManyToOne(type => Campaign, { onDelete: "CASCADE" })
     campaign!: Campaign
 
 }

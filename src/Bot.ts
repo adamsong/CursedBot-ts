@@ -42,7 +42,7 @@ client.login(config.TOKEN).then(() => {
 AppDataSource.initialize().then(() => {
     readyCount++;
     console.log("Data source ready")
-    campaignController.initCache()
+    campaignController.initCache(client)
 });
 
 const app = express();

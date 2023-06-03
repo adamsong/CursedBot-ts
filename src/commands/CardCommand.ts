@@ -1,7 +1,6 @@
 import { Command } from '../Command';
-import { Client, CommandInteraction, MessageActionRow, MessageButton } from 'discord.js';
+import { Client, CommandInteraction } from 'discord.js';
 import cardsManager, { CardType } from '../CardsManager';
-import { MessageButtonStyles } from 'discord.js/typings/enums';
 import { CardButton } from '../buttons/CardButton';
 
 export const CardCommand: Command = {
@@ -14,7 +13,7 @@ export const CardCommand: Command = {
             case "bad":
                 let result
                 try {
-                    result = await cardsManager.drawCard(subcommand === "good" ? CardType.Good : CardType.Bad, interaction.user.id)
+                    result = await cardsManager.drawCard(subcommand === "good" ? CardType.Good : CardType.Bad, interaction.user.id, client)
                 } catch (e: any) {
                     await interaction.reply(e.toString())
                     return

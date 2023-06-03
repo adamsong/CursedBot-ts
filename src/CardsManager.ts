@@ -4,6 +4,7 @@ import { DrawnCard } from './entity/DrawnCard';
 import { IsNull } from 'typeorm';
 import campaignController from './CampaignController';
 import { Campaign } from './entity/Campaign';
+import { Client } from 'discord.js';
 
 class CardsManager {
     private readonly cardsData: CardData[] = []
@@ -38,18 +39,18 @@ class CardsManager {
         this.cardsData.forEach(cardData => cardData.drawn = drawnSet.has(cardData.id))
     }
 
-    public async drawCard(type: CardType, whom: string): Promise<CardData> {
+    public async drawCard(type: CardType, whom: string, client: Client): Promise<CardData> {
         const pickable = this.cardsData.filter(card => card.type === type && !card.drawn)
         const picked = pickable.length ? pickable[Math.floor(Math.random() * pickable.length)] : undefined
         if(!picked) throw "No cards available"
         picked.drawn = true
-        if(campaignController.hasActive()) {
-            const drawnCard = new DrawnCard()
-            drawnCard.cardId = picked.id
-            drawnCard.campaign = await campaignController.getActive() as Campaign
-            drawnCard.holder = whom
-            await this.drawnCardRepo.save(drawnCard)
-        }
+
+        const drawnCard = new DrawnCard()
+        drawnCard.cardId = picked.id
+        drawnCard.campaign = await campaignController.getActive(client) as Campaign
+        drawnCard.holder = whom
+        await this.drawnCardRepo.save(drawnCard)
+
         return picked
     }
 
