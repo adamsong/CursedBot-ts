@@ -9,7 +9,7 @@ export const CampaignCommand: Command = {
         switch(interaction.options.getSubcommand()) {
             case "create":
                 const new_name = interaction.options.getString("name", true)
-                if(await campaignController.addCampaign(new_name)) {
+                if(await campaignController.addCampaign(new_name, client)) {
                     await interaction.reply(`${new_name} created and made the active campaign`)
                 } else {
                     await interaction.reply({
@@ -20,7 +20,7 @@ export const CampaignCommand: Command = {
                 break;
             case "delete":
                 const delete_name = interaction.options.getString("name", true)
-                if(await campaignController.deleteCampaign(delete_name)) {
+                if(await campaignController.deleteCampaign(delete_name, client)) {
                     await interaction.reply(`Campaign ${delete_name} deleted successfully`)
                 } else {
                     await interaction.reply({
@@ -31,7 +31,7 @@ export const CampaignCommand: Command = {
                 break;
             case "select":
                 const select_name = interaction.options.getString("name", true)
-                const select_result = await campaignController.selectCampaign(select_name)
+                const select_result = await campaignController.selectCampaign(select_name, client)
                 if(select_result) {
                     await interaction.reply({
                         content: select_result,
@@ -42,23 +42,27 @@ export const CampaignCommand: Command = {
                 }
                 break;
             case "get":
-                const get_name = (await campaignController.getActive())?.name
+                const get_name = (await campaignController.getActive(client))?.name
                 await interaction.reply({
                     content: get_name || "There is no active campaign",
                     ephemeral: true
                 })
                 break;
             case "list":
-                const list_name = (await campaignController.getActive())?.name
-                const names = campaignController.getNames().map(value => value === list_name ? `+ ${value}` : `  ${value}`)
+                const list_name = (await campaignController.getActive(client))?.name
+                const names = campaignController.getNames().filter(name => name !== "<ONE SHOT>").map(value => value === list_name ? `+ ${value}` : `  ${value}`)
                 await interaction.reply({
                     content: "```diff\n" + names.join("\n") + "\n```",
                     ephemeral: true
                 })
                 break;
-            case "oneshot":
-                await campaignController.clearCampaign()
-                await interaction.reply("Prepped for one-shot")
+            case "resume":
+                await campaignController.oneShot(false, client)
+                await interaction.reply("Resumed one-shot")
+                break;
+            case "new":
+                await campaignController.oneShot(true, client)
+                await interaction.reply("Started new one-shot")
         }
     },
     autocomplete: async (client: Client, interaction: AutocompleteInteraction) => {
@@ -117,9 +121,21 @@ export const CampaignCommand: Command = {
             description: "Lists all campaigns"
         },
         {
-            type: 'SUB_COMMAND',
+            type: 'SUB_COMMAND_GROUP',
             name: "oneshot",
-            description: "Deactivates all campaigns, won't persist campaign data"
+            description: "Creates a temporary campaign",
+            options: [
+                {
+                    type: 'SUB_COMMAND',
+                    name: "resume",
+                    description: "Continue a previous oneshot if available"
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: "new",
+                    description: "Start a new oneshot"
+                }
+            ]
         }
     ]
 

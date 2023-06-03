@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Campaign {

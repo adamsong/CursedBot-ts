@@ -1,14 +1,14 @@
 import { AppDataSource } from './data-source';
 import { Campaign } from './entity/Campaign';
+import { Client } from 'discord.js';
 
 interface Callback {
-    (): any
+    (client: Client): any
 }
 
 class CampaignController {
     private campaignRepo = AppDataSource.getRepository(Campaign);
     private nameCache: string[] = []
-    private _hasActive: boolean = false
 
     private callbacks: Callback[] = []
 
@@ -16,32 +16,29 @@ class CampaignController {
         this.callbacks.push(callback)
     }
 
-    private async campaignChangeEvent() {
-        await Promise.all(this.callbacks.map(callback => Promise.resolve(callback())))
+    private async campaignChangeEvent(client: Client) {
+        await Promise.all(this.callbacks.map(callback => Promise.resolve(callback(client))))
     }
 
-    public initCache() {
+    public initCache(client: Client) {
         this.campaignRepo.find().then(data => {
             this.nameCache = data.map(datum => datum.name)
-            this._hasActive = !!data.find(datum => datum.active)
-            if(this._hasActive) {
-                this.campaignChangeEvent().then()
+            if(!data.find(datum => datum.active)) {
+                this.oneShot(false, client).then()
+            } else {
+                this.campaignChangeEvent(client).then()
             }
         })
     }
 
-    public hasActive() {
-        return this._hasActive;
+    public async getActive(client: Client): Promise<Campaign> {
+        const repo = await this.campaignRepo.findOneBy({active: true})
+        if(repo) return repo
+        await this.oneShot(false, client)
+        return await this.campaignRepo.findOneBy({active: true}) as Campaign
     }
 
-    public getActive(): Promise<Campaign | null> {
-        if(this.hasActive()) {
-            return this.campaignRepo.findOneBy({active: true})
-        }
-        return new Promise((resolve, _) => resolve(null))
-    }
-
-    public async addCampaign(name: string): Promise<boolean> {
+    public async addCampaign(name: string, client: Client): Promise<boolean> {
         if(await this.campaignRepo.findOneBy({
             name: name
         })) {
@@ -51,7 +48,7 @@ class CampaignController {
         campaign.name = name
         campaign.active = true
 
-        const lastActive = await this.getActive()
+        const lastActive= await this.campaignRepo.findOneBy({active: true})
         const toSave = [campaign]
         if(lastActive) {
             lastActive.active = false
@@ -59,22 +56,25 @@ class CampaignController {
         }
         await this.campaignRepo.save(toSave);
         this.nameCache.push(name)
-        this._hasActive = true
-        await this.campaignChangeEvent()
+        await this.campaignChangeEvent(client)
         return true
     }
 
-    public async deleteCampaign(name: string): Promise<boolean> {
+    public async deleteCampaign(name: string, client: Client, replace: boolean = true): Promise<boolean> {
         const campaign = await this.campaignRepo.findOneBy({ name: name })
         if(!campaign) return false
         await this.campaignRepo.remove(campaign)
         this.nameCache.splice(this.nameCache.indexOf(name), 1)
-        this._hasActive = false
+        if(replace) {
+            await this.oneShot(false, client)
+        } else {
+            await this.campaignChangeEvent(client)
+        }
         return true
     }
 
-    public async selectCampaign(name: string): Promise<string | null> {
-        const [prev, next] = await Promise.all([this.getActive(), this.campaignRepo.findOneBy({name: name})])
+    public async selectCampaign(name: string, client: Client): Promise<string | null> {
+        const [prev, next] = await Promise.all([await this.campaignRepo.findOneBy({active: true}), this.campaignRepo.findOneBy({name: name})])
         if(!next) return `Cannot find campaign ${name}`
         if(next.active) return `${name} is already the selected campaign`
         next.active = true
@@ -84,19 +84,32 @@ class CampaignController {
             toSave.push(prev)
         }
         await this.campaignRepo.save(toSave)
-        this._hasActive = true
-        await this.campaignChangeEvent()
+        await this.campaignChangeEvent(client)
         return null
     }
 
-    public async clearCampaign(): Promise<void> {
-        await this.campaignRepo.update({ active: true }, { active: false })
-        this._hasActive = false
-        await this.campaignChangeEvent()
+    public async oneShot(clear: boolean, client: Client): Promise<void> {
+        if(clear) {
+            await this.deleteCampaign("<ONE SHOT>", client, false)
+            await this.addCampaign("<ONE SHOT>", client)
+        } else {
+            console.log("Looking for one shot")
+            const oneshot= await this.campaignRepo.findOneBy({name: "<ONE SHOT>"})
+            console.log(`Oneshot is ${!!oneshot}`)
+            if(oneshot) {
+                console.log(`Oneshot is active? ${oneshot.active}`)
+                if(oneshot.active) return
+                console.log(`Selecting oneshot`)
+                await this.selectCampaign("<ONE SHOT>", client)
+            } else {
+                console.log(`Creating oneshot`)
+                await this.addCampaign("<ONE SHOT>", client)
+            }
+        }
     }
 
     public getNames(filter: string = "", limit: number = -1): string[] {
-        return this.nameCache.filter((value, i) => value.startsWith(filter) && (limit == -1 || i < limit))
+        return this.nameCache.filter((value, i) => value.startsWith(filter) && (limit == -1 || i < limit) && value !== "<ONE SHOT>")
     }
 
 }
