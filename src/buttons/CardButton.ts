@@ -21,7 +21,7 @@ export const CardButton: ButtonHandler & { getBaseButtons: () => MessageActionRo
                         .setPlaceholder("Select your card")
                         .addOptions(cards.map(card => {
                             return {
-                                label: card.effect,
+                                label: card.effect.substring(0, 100),
                                 description: "",
                                 value: card.id
                             }
