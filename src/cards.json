@@ -99,6 +99,206 @@
 		"type": "bad",
 		"effect": "The next enemy you fight will attack you over other targets whenever possible"
 	},
+	"bb26": {
+		"type": "bad",
+		"effect": "Roll one more damage dice of the same type."
+	},
+	"bb27": {
+		"type": "bad",
+		"effect": "A magical item carried by a player character experiences a surge a deals damage based on its rarity: Common = 1d6, Uncommon = 2d6, Rare = 3d6, Very Rare = 4d6, Legendary = Dm's Choice."
+	},
+	"bb28": {
+		"type": "bad",
+		"effect": "A character steps on a trap."
+	},
+	"bb29": {
+		"type": "bad",
+		"effect": "The party is ambushed by a creature."
+	},
+	"bb30": {
+		"type":"bad",
+		"effect":"An NPC takes a sudden dislike to a player character."
+	},
+	"bb31": {
+		"type":"bad",
+		"effect":"A player loses 1 HP (player's choice)"
+	},
+	"bb32": {
+		"type":"bad",
+		"effect":"Something useful to the party breaks."
+	},
+	"bb33": {
+		"type":"bad",
+		"effect":"An NPC useful to the players betrays them."
+	},
+	"bb34": {
+		"type":"bad",
+		"effect":"The players must pick one object in the room they currently occupy to become a mimic."
+	},
+	"bb35": {
+		"type":"bad",
+		"effect":"If a player would notice something with their passive perception, they don't"
+	},
+	"bb36": {
+		"type":"bad",
+		"effect":"Legendary Resistance: A creature of your choice can choose to pass a saving throw it failed."
+	},
+	"bb37": {
+		"type":"bad",
+		"effect":"Roll on the standard Wild Magic table."
+	},
+	"bb38": {
+		"type":"bad",
+		"effect":"Roll on the Expanded Wild Magic table."
+	},
+	"bb39": {
+		"type":"bad",
+		"effect":"A weapon of your choice is damaged. Attack rolls made with it are made at disadvantage."
+	},
+	"bb40": {
+		"type":"bad",
+		"effect":"Something bad happens to the players (Player's choice)"
+	},
+	"bb41": {
+		"type":"bad",
+		"effect":"Reroll any missed attack made by an NPC"
+	},
+	"bb42": {
+		"type":"bad",
+		"effect":"A player's magical items become mundane until the end of the round."
+	},
+	"bb43": {
+		"type":"bad",
+		"effect":"Add one damage die to the attacks of any creature."
+	},
+	"bb44": {
+		"type":"bad",
+		"effect":"One creature of your choice gains an extra attack to use as part of an attack action."
+	},
+	"bb45": {
+		"type":"bad",
+		"effect":"One creature of your choice gains the benefit (and hindrance) of one armor of your choice."
+	},
+	"bb46": {
+		"type":"bad",
+		"effect":"One creature of your choice can cast one cantrip of your choice as a bonus action."
+	},
+	"bb47": {
+		"type":"bad",
+		"effect":"One creature of your choice gains a breath weapon (fire or acid) that it can use once in combat. The DM may choose what is fair damage."
+	},
+	"bb48": {
+		"type":"bad",
+		"effect":"Roll twice for any source of healing and take the lower result."
+	},
+	"bb49": {
+		"type":"bad",
+		"effect":"Players receive minimum healing from a rest."
+	},
+	"bb50": {
+		"type":"bad",
+		"effect":"Next player that casts a spell uses two spell slots instead of one, but does 50% more damage."
+	},
+	"bb51": {
+		"type":"bad",
+		"effect":"The next merchant the players meet charges double."
+	},
+	"bb52": {
+		"type":"bad",
+		"effect":"An item the players need to purchase or obtain is unavailable in this town."
+	},
+	"bb53": {
+		"type":"bad",
+		"effect":"All the players' rations are spoiled."
+	},
+	"bb54": {
+		"type":"bad",
+		"effect":"The players encounter a second, identical enemy to the one they just fought."
+	},
+	"bb55": {
+		"type":"bad",
+		"effect":"A player of your choice makes a Wisdom saving throw (DC = 8 + level) or they become frightened for rounds equal to PC level. The PC takes the dash action, moving away in a random direction."
+	},
+	"bb56": {
+		"type":"bad",
+		"effect":"The party finds whatever they're fighting to be super cute and have disadvantage on all attacks until that creature lands a hit on them."
+	},
+	"bb57": {
+		"type":"bad",
+		"effect":"Demand any item the party has. If they refuse to give it up, this card counts as any other Bad Boy Card."
+	},
+	"bb58": {
+		"type":"bad",
+		"effect":"The party becomes lost."
+	},
+	"bb59": {
+		"type":"bad",
+		"effect":"Say something nice about any player, then make them reroll anything."
+	},
+	"bb60": {
+		"type":"bad",
+		"effect":"A creature of your choice may take one action"
+	},
+	"bb61": {
+		"type":"bad",
+		"effect":"Trade a Bad Boy card of your choice for a Good Boy card of your choice."
+	},
+	"bb62": {
+		"type":"bad",
+		"effect":"A player of your choice loses a random Good Boy Card."
+	},
+	"bb63": {
+		"type":"bad",
+		"effect":"A violent storm suddenly rolls in. Ranged attacks are made with disadvantage and PCs who are caught in the storm gain a level of exhaustion per hour."
+	},
+	"bb64": {
+		"type":"bad",
+		"effect":"A sandstorm suddenly rolls in. Exposed creatures must make a Constitution saving throw (DC determined by DM) or take 1 point of slashing and be blinded until the storm stops."
+	},
+	"bb65": {
+		"type":"bad",
+		"effect":"Turn a critical miss into a critical hit."
+	},
+	"bb66": {
+		"type":"bad",
+		"effect":"Turn a successful skill check into a failed one."
+	},
+	"bb67": {
+		"type":"bad",
+		"effect":"An NPC of your choice can act in a surprise round when they normally couldn't."
+	},
+	"bb68": {
+		"type":"bad",
+		"effect":"All NPCs may act in a surprise round."
+	},
+	"bb69": {
+		"type":"bad",
+		"effect":"A player rerolls a skill check."
+	},
+	"bb70": {
+		"type":"bad",
+		"effect":"A player rolls damage twice and takes the lower result."
+	},
+	"bb71": {
+		"type":"bad",
+		"effect":"An NPC notices if a PC is lying to them."
+	},
+	"bb72": {
+		"type":"bad",
+		"effect":"An NPC falsely believes a PC is lying to them."
+	},
+	"bb73": {
+		"type":"bad",
+		"effect":"Creature of your choice regains 10% of it's HP (rounded up)"
+	},
+	"bb74": {
+		"type":"bad",
+		"effect":"If a player is rolling Death saving throws, they need four successes rather than three to stabilize"
+	},
+	"bb75": {
+		"type":"bad",
+		"effect":"A major antagonist becomes unkillable until they are allowed to finish their speech. Once this card has been used, it cannot be used for the rest of the campaign."
+	},
 	"gb1": {
 		"type": "good",
 		"effect": "Succeed on an attack roll"
@@ -198,5 +398,205 @@
 	"gb25": {
 		"type": "good",
 		"effect": "A fortuitous circumstance! This may manifest itself in many ways, including (but not limited to): double the loot reward, finding a door or chest unlocked, coming across a broken trap, bumping into someone you were looking for, or any manner of lucky happenstance that helps you during your adventure"
+	},
+	"gb26": {
+		"type": "good",
+		"effect": "Move an extra 5 feet on your turn"
+	},
+	"gb27": {
+		"type": "good",
+		"effect": "The DM must lay out the best possible phrasing for you when talking to an NPC"
+	},
+	"gb28": {
+		"type": "good",
+		"effect": "Remove one condition affecting you"
+	},
+	"gb29": {
+		"type": "good",
+		"effect": "Roll your Initiative with advantage"
+	},
+	"gb30": {
+		"type": "good",
+		"effect": "Choose where you go in Initiative "
+	},
+	"gb31": {
+		"type": "good",
+		"effect": "Until the start of your next turn, change the type of damage you deal to either Fire or Cold"
+	},
+	"gb32": {
+		"type": "good",
+		"effect": "Until the start of your next turn, change the type of damage you deal to either Thunder or Lightning"
+	},
+	"gb33": {
+		"type": "good",
+		"effect": "Until the start of your next turn, change the type of damage you deal to either Radiant or Necrotic"
+	},
+	"gb34": {
+		"type": "good",
+		"effect": "Reroll an attack you missed"
+	},
+	"gb35": {
+		"type": "good",
+		"effect": "Reroll a failed saving throw"
+	},
+	"gb36": {
+		"type": "good",
+		"effect": "Reroll and attack roll or saving throw for an ally using your appropriate modifier"
+	},
+	"gb37": {
+		"type": "good",
+		"effect": "You coincidentally have the exact tool needed to complete the task, either on hand or nearby. The DM may still require a roll, and the toll will break after being used"
+	},
+	"gb38": {
+		"type": "good",
+		"effect": "Until the start of your next turn, you just see it. (You pass any perception check, even if you would otherwise fail)"
+	},
+	"gb39": {
+		"type": "good",
+		"effect": "You roll your damage twice and take the higher result"
+	},
+	"gb40": {
+		"type": "good",
+		"effect": "Play this card before you attack. If you hit, the attack counts as a critical hit."
+	},
+	"gb41": {
+		"type": "good",
+		"effect": "You can sense magical auras as per the detect magic spell for 10 minutes. You must maintain concentration to retain the effect."
+	},
+	"gb42": {
+		"type": "good",
+		"effect": "Automatically critical hit on your next weapon attack (not spells) but do the minimum damage."
+	},
+	"gb43": {
+		"type": "good",
+		"effect": "Learn if an NPC is lying to you"
+	},
+	"gb44": {
+		"type": "good",
+		"effect": "All attack rolls you make this round are made with advantage"
+	},
+	"gb45": {
+		"type": "good",
+		"effect": "You make one more attack this round as part of the attack action"
+	},
+	"gb46": {
+		"type": "good",
+		"effect": "Roll your skill check with advantage"
+	},
+	"gb47": {
+		"type": "good",
+		"effect": "Play this card immediately after you draw it. You learn a new language. If you draw this card a second time, ignore it and draw again."
+	},
+	"gb48": {
+		"type": "good",
+		"effect": "You succeed on a skill check."
+	},
+	"gb49": {
+		"type": "good",
+		"effect": "You only receive half damage from one attack that hits you."
+	},
+	"gb50": {
+		"type": "good",
+		"effect": "You ignore all damage from one attack that hits you."
+	},
+	"gb51": {
+		"type": "good",
+		"effect": "You gain resistance to damage from non-magical attacks until the start of your next turn."
+	},
+	"gb52": {
+		"type": "good",
+		"effect": "Double your proficiency bonus until the start of your next turn."
+	},
+	"gb53": {
+		"type": "good",
+		"effect": "Triple your proficiency bonus until the start of your next turn."
+	},
+	"gb54": {
+		"type": "good",
+		"effect": "You regain hit points equal to 1d10 + your level"
+	},
+	"gb55": {
+		"type": "good",
+		"effect": "If your last attack roll was a hit, you can hit automatically on your next attack against the same target."
+	},
+	"gb56": {
+		"type": "good",
+		"effect": "You gain the benefit of a Long Rest on a Short Rest."
+	},
+	"gb57": {
+		"type": "good",
+		"effect": "You recall one specific piece of lore relevant to the current situation."
+	},
+	"gb58": {
+		"type": "good",
+		"effect": "You take all incoming damage for one ally this round (or let them take the damage for you, if they're willing)"
+	},
+	"gb59": {
+		"type": "good",
+		"effect": "If damage would reduce you to 0 or less HP, you fall to 1 HP instead."
+	},
+	"gb60": {
+		"type": "good",
+		"effect": "If you are unconscious and need to roll Death saving throws, you can automatically stabilize."
+	},
+	"gb61": {
+		"type": "good",
+		"effect": "If you are unconscious and need to roll Death saving throws, you can gain the benefits of a Short Rest."
+	},
+	"gb62": {
+		"type": "good",
+		"effect": "If you died within the last minute, return to life with 1 HP. This cannot restore you to life if you died of old age, and does not restore missing body parts."
+	},
+	"gb63": {
+		"type": "good",
+		"effect": "If another player succeeded on a skill check in the last minute, you can succeed on the same skill check."
+	},
+	"gb64": {
+		"type": "good",
+		"effect": "You reroll any Strength-based check with advantage."
+	},
+	"gb65": {
+		"type": "good",
+		"effect": "You reroll any Dexterity-based check with advantage."
+	},
+	"gb66": {
+		"type": "good",
+		"effect": "You reroll any Constitution-based check with advantage."
+	},
+	"gb67": {
+		"type": "good",
+		"effect": "You reroll any Intelligence-based check with advantage."
+	},
+	"gb68": {
+		"type": "good",
+		"effect": "You reroll any Wisdom-based check with advantage."
+	},
+	"gb69": {
+		"type": "good",
+		"effect": "You reroll any Charisma-based check with advantage."
+	},
+	"gb70": {
+		"type": "good",
+		"effect": "You cast a cantrip you don't know. Follow the spells' regular rules."
+	},
+	"gb71": {
+		"type": "good",
+		"effect": "A fortuitous circumstance! This may manifest itself in many ways, including (but not limited to): double the loot reward, finding a door or chest unlocked, coming across a broken trap, bumping into someone you were looking for, or any manner of lucky happenstance that helps you during your adventure"
+	},
+	"gb72": {
+		"type": "good",
+		"effect": "You may reroll any roll."
+	},
+	"gb73": {
+		"type": "good",
+		"effect": "The next merchant you meet gives you a discount"
+	},
+	"gb74": {
+		"type": "good",
+		"effect": "You impress an NPC with a party trick"
+	},
+	"gb75": {
+		"type": "good",
+		"effect": "A potion in your inventory is potent enough for two doses."
 	}
 }
